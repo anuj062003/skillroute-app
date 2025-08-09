@@ -7,7 +7,6 @@ from pydantic import BaseModel
 from sqlmodel import Session, select
 from database import create_db_and_tables, engine
 from models import Job, Skill
-# Import the new logic functions
 from logic import fetch_jobs_for_role, extract_skills_for_role
 
 class RoadmapRequest(BaseModel):
@@ -31,7 +30,14 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-origins = ["http://localhost:3000"]
+# --- THIS IS THE PART TO UPDATE ---
+# We add your new Vercel URL to the list of allowed origins
+origins = [
+    "http://localhost:3000",
+    "https://skillroute-9abzbvnxx-anujs-projects-358eb027.vercel.app" # Your Vercel Frontend URL
+]
+# --- END OF UPDATE ---
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -42,12 +48,9 @@ app.add_middleware(
 
 @app.post("/api/roadmap", response_model=RoadmapResponse)
 def get_roadmap(request: RoadmapRequest, session: Session = Depends(get_session)):
-    # 1. CHECK IF DATA FOR THE TARGET ROLE EXISTS IN OUR DATABASE
-    # We use .like() for a more flexible search (e.g., "Data Scientist" matches "Senior Data Scientist")
     statement = select(Job).where(Job.title.like(f"%{request.target_role}%"))
     existing_jobs = session.exec(statement).first()
 
-    # 2. IF NO DATA EXISTS, FETCH AND PROCESS IT ON-THE-FLY
     if not existing_jobs:
         try:
             fetch_jobs_for_role(session, request.target_role)
@@ -55,11 +58,13 @@ def get_roadmap(request: RoadmapRequest, session: Session = Depends(get_session)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Failed to process new role: {e}")
 
-    # 3. NOW PROCEED WITH THE SKILL GAP ANALYSIS
     statement = select(Skill).join(Job.skills).where(Job.title.like(f"%{request.target_role}%"))
     results = session.exec(statement).all()
     if not results:
-        raise HTTPException(status_code=404, detail=f"Could not find any skills for the role: {request.target_role}. Try a more general title.")
+        raise HTTPException(
+            status_code=404, 
+            detail=f"Could not extract any known skills for '{request.target_role}'. The job descriptions might be too generic. Try a broader search term like 'Frontend Developer'."
+        )
         
     required_skills_set: Set[str] = {skill.name for skill in results}
     current_skills_set: Set[str] = set(skill.lower() for skill in request.current_skills)
