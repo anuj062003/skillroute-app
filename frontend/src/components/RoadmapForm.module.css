@@ -1,0 +1,94 @@
+/* frontend/src/components/RoadmapForm.module.css */
+.formWrapper {
+  background-color: #151517; /* Slightly lighter than pure black */
+  padding: 2.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.formInput, .formSelect {
+  margin-top: 0.5rem;
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #333;
+  color: #f5f5f7;
+  border: 1px solid #444;
+  border-radius: 0.75rem;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.formInput:focus, .formSelect:focus {
+  outline: none;
+  border-color: #0071e3;
+  box-shadow: 0 0 0 2px #0071e3;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #a0a0a0;
+}
+
+.formButton {
+  margin-top: 2rem;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  color: white;
+  background-color: #0071e3; /* Electric Blue */
+  transition: background-color 0.2s;
+}
+
+.formButton:hover {
+  background-color: #0077ed;
+}
+
+.formButton:disabled {
+  background-color: #444;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.resultsContainer {
+  margin-top: 3rem;
+}
+
+.resultsTitle {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: white;
+}
+
+.resultsSubtitle {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+  color: #a0a0a0;
+}
+
+.skillsWrapper {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.skillPill {
+  background-color: rgba(0, 113, 227, 0.15);
+  color: #64b5f6;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 113, 227, 0.3);
+}

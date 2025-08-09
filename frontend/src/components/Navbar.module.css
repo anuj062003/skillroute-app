@@ -1,0 +1,46 @@
+/* frontend/src/components/Navbar.module.css */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: rgba(29, 29, 31, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 80rem;
+  padding: 1rem 1.5rem;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.ctaButton {
+  border-radius: 9999px;
+  background-color: #0071e3; /* Electric Blue */
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: background-color 0.2s;
+}
+
+.ctaButton:hover {
+  background-color: #0077ed;
+}

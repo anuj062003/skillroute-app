@@ -1,0 +1,12 @@
+/* frontend/src/app/globals.css */
+body {
+  background-color: #1d1d1f; /* Charcoal Black */
+  color: #f5f5f7; /* Off-white */
+  font-family: var(--font-inter);
+  margin: 0;
+}
+
+/* Helper class for our display font */
+.font-display {
+  font-family: var(--font-poppins);
+}
